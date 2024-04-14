@@ -3,6 +3,7 @@ package com.yoga.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class UsersInformation {
+public class UsersInformation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
