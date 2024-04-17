@@ -2,9 +2,11 @@ package com.yoga.controller;
 
 import com.yoga.exception.ExceptionStatusCode;
 import com.yoga.exception.InvalidInputException;
-import com.yoga.model.dto.UserInformationDto;
+import com.yoga.model.request.UpdateUserInformationDto;
+import com.yoga.model.request.UserInformationDto;
 import com.yoga.model.entity.UsersInformation;
 import com.yoga.service.UserInformationService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "/user")
 @Slf4j
-public class ControllerClass {
+public class UserControllerClass {
 
     @Autowired
     UserInformationService userInformationService;
@@ -38,19 +40,19 @@ public class ControllerClass {
         return new ResponseEntity<>(userInformationService.saveUserInformation(userInformationDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/identifier-userId")
+    @GetMapping(value = "/identifier-userId",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<UsersInformation>> User_ById(@RequestParam(value = "userId")UUID userId)
     {
         return new ResponseEntity<>(userInformationService.findUserInformationByID(userId),HttpStatus.OK);
     }
 
-    @GetMapping("/identifier-email")
-    public  ResponseEntity<UsersInformation> User_ByEmail(@RequestParam(value = "email")String email)
+    @GetMapping(value = "/identifier-email",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public  ResponseEntity<UsersInformation> User_ByEmail(@Valid @RequestParam(value = "email")String email)
     {
         return new ResponseEntity<>(userInformationService.findUserInformationByEmail(email),HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete-user")
+    @DeleteMapping(value = "/delete-user",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> Delete_UserById(@RequestParam(value = "userId")UUID userId)
     {
         boolean deleted = userInformationService.deleteUserByID(userId);
@@ -61,4 +63,11 @@ public class ControllerClass {
                     .body("Product with ID " + userId + " was not found in the inventory.");
         }
     }
+
+    @PutMapping(value = "/update-user/{userId}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UsersInformation>Update_UserById(@PathVariable UUID userId, @Valid @RequestBody UpdateUserInformationDto updateUserInformationDto)
+    {
+        return new ResponseEntity<>(userInformationService.updateUserInformation(userId,updateUserInformationDto),HttpStatus.OK);
+    }
+
 }

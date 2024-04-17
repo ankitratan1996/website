@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -21,7 +22,7 @@ public class GlobalExceptionalHandler {
                 invalidInputException.getExceptionStatusCode().getHttpStatus());
     }
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class,})
     public ResponseEntity<String> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
         String paramName = ex.getName();
         String errorMessage = "Invalid value for parameter '" + paramName + "'. Please provide a valid UUID.";
@@ -34,4 +35,5 @@ public class GlobalExceptionalHandler {
         String errorMessage = "Query did not return a unique result for:" + paramName;
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
+
 }
