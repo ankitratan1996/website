@@ -3,7 +3,6 @@ package com.yoga.controller;
 import com.yoga.exception.ExceptionStatusCode;
 import com.yoga.exception.InvalidInputException;
 import com.yoga.model.entity.Instructor;
-import com.yoga.model.entity.UsersInformation;
 import com.yoga.model.request.InstructorInformationDto;
 import com.yoga.model.request.UpdateInstructorInformationDto;
 import com.yoga.service.InstructorInformationService;
