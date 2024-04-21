@@ -71,7 +71,7 @@ public class InstructorInformationService {
         existingInstructorInfo.setEmail(updateinstructorInformationDto.getEmail());
         existingInstructorInfo.setPhone(updateinstructorInformationDto.getPhone());
         existingInstructorInfo.setQualification(updateinstructorInformationDto.getQualification());
-        return instructorInformationRepo.saveAndFlush(existingInstructorInfo);
+        return instructorInformationRepo.save(existingInstructorInfo);
     }
 
     public Instructor findInstructorInformationByEmailFirstTime(String email) {

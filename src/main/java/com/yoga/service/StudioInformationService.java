@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StudioInformationService {
-
     @Autowired
     StudioInformationRepo studioInformationRepo;
     public Studio SaveStudioInfo(StudioInformationDto studioInformationDto) {
